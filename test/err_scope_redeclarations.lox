@@ -1,0 +1,14 @@
+var b = "global b";
+
+{
+var a = "hi";
+var b = "hello";
+var a = "bye";
+}
+
+b = "new global b";
+
+fun someFn() {
+  var c;
+  var c = 5;
+}

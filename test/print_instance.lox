@@ -1,0 +1,13 @@
+class Bagel {}
+print Bagel;
+
+var bagel = Bagel();
+print bagel; // Prints "Bagel instance".
+bagel.name = "hi";
+print bagel.name;
+
+bagel.name = "bye";
+print bagel.name;
+
+bagel = "I ate the bagel";
+print bagel;

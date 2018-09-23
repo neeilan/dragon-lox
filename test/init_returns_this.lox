@@ -1,0 +1,11 @@
+class SomeClass {
+  init(inc) {
+    this.property = this.initial_value() + inc;
+  }
+
+  initial_value() { return 5; }
+}
+
+var x = SomeClass(-2);
+print(x);
+print x.init(1);

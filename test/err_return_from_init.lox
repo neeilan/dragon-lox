@@ -1,0 +1,6 @@
+class SomeClass {
+  init() {
+    this.x = 5;
+    return this.x;
+  }
+}

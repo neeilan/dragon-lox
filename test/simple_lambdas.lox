@@ -1,0 +1,30 @@
+fun from1to3(fn) {
+  for (var i = 1; i <= 3; i = i + 1) {
+    fn(i);
+  } 
+}
+// Simple lambda
+from1to3(lambda (a) { print a * 2; });
+
+// Modifying bound state in closure
+var sum = 0;
+from1to3(lambda (curr) { sum = sum + curr; });
+print sum;
+
+// Call a bound function in closure
+fun getNegative(x) { return -x; }
+from1to3(lambda (x) { print getNegative(x); });
+
+// Return a lambda from a function
+fun getDoublingLambda() {
+  return lambda (i) { print i * 2; };
+}
+from1to3(getDoublingLambda());
+
+// Declare variable inside a lambda
+var scalingFactor = 3;
+from1to3(lambda (x) { var scalingFactor = -3; print (x * scalingFactor); });
+
+// Assign a lambda to a variable
+var printLambda = lambda (x) { print x; };
+from1to3(printLambda);

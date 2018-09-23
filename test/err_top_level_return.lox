@@ -1,0 +1,7 @@
+fun sayHi() {
+  print "hi";
+}
+
+return 5;
+
+sayHi();

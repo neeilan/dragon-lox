@@ -1,0 +1,21 @@
+
+fun scope(a) {
+  var a = "local";
+  var b  = 4;
+  var c;
+  print a;
+}
+
+fun unused_fun() {
+  var x;
+  print(x);
+}
+
+var x = 1;
+
+{
+  var y = 4;
+}
+
+scope(0);
+

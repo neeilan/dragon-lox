@@ -1,0 +1,24 @@
+fun double(x) {
+  return 2 * x;
+}
+
+fun add(a, b) {
+  var added = a + b;
+  return added;
+}
+
+
+fun return_nil() {
+  print "Returning nil explicitly";
+  return nil;
+}
+
+fun return_nil1() {
+  print "Returning nil implicitly";
+}
+
+print double(10);
+print add(5, 10);
+print add(add("adding", " strings"), "!");
+print return_nil();
+print return_nil1();

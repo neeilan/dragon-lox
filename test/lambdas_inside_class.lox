@@ -1,0 +1,20 @@
+fun from1to3(fn) {
+  for (var i = 1; i <= 3; i = i + 1) {
+    fn(i);
+  } 
+}
+
+// Lambdas inside a class (binding to this.*)
+class SomeClass {
+  init() {
+    this.sum = 0;
+  }
+  printSum() {
+    //from1to3(lambda (x) { this.sum = this.sum + x; print this.sum;  });
+    fun add(x) { this.sum = this.sum + x; }
+    from1to3(add);
+    print this.sum;
+  }
+}
+
+SomeClass().printSum();

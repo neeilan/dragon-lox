@@ -1,0 +1,9 @@
+/* Multi
+line
+comment 1 */
+
+var x = "Multiline comments!";
+
+/* Il$$3g^l charac%ers '\ */
+
+print x;
