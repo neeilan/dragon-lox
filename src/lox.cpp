@@ -50,13 +50,12 @@ void Lox::run(const std::string& source) {
     const std::vector<Token> tokens = scanner.scan_tokens();
 
     Parser parser(tokens);
-    std::vector<Stmt*> statements = parser.parse();
+    std::vector<Stmt *> statements = parser.parse();
 
     // Stop if there was a parsing error.
     if (had_error) return;
-
-    CodeGenerator code_generator;
 }
+
 
 void Lox::error(int line, const std::string& message) {
     report(line, "", message);

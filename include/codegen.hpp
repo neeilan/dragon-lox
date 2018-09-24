@@ -5,26 +5,30 @@
 #ifndef LOXPP_CODEGEN_HPP
 #define LOXPP_CODEGEN_HPP
 
-// DragonLox libraries
 #include "expr.hpp"
 #include "visitor.h"
 
-class CodeGenerator : public ExprVisitor<void> {
+#include "llvm/IR/Value.h"
+
+using llvm::Value;
+
+class CodeGenerator : public ExprVisitor<Value*> {
 public:
-    virtual void visit(const Unary*);
-    virtual void visit(const Binary*);
-    virtual void visit(const Grouping*);
-    virtual void visit(const StrLiteral*);
-    virtual void visit(const NumLiteral*);
-    virtual void visit(const BoolLiteral*);
-    virtual void visit(const Variable*);
-    virtual void visit(const Assignment*);
-    virtual void visit(const Logical*);
-    virtual void visit(const Call*);
-    virtual void visit(const Get*);
-    virtual void visit(const Set*);
-    virtual void visit(const This*);
-    virtual void visit(const Lambda*);
+    virtual Value* visit(const Unary*);
+    virtual Value* visit(const Binary*);
+    virtual Value* visit(const Grouping*);
+    virtual Value* visit(const StrLiteral*);
+    virtual Value* visit(const NumLiteral*);
+    virtual Value* visit(const BoolLiteral*);
+    virtual Value* visit(const Variable*);
+    virtual Value* visit(const Assignment*);
+    virtual Value* visit(const Logical*);
+    virtual Value* visit(const Call*);
+    virtual Value* visit(const Get*);
+    virtual Value* visit(const Set*);
+    virtual Value* visit(const This*);
+    virtual Value* visit(const Lambda*);
+    void print();
     
 };
 

@@ -2,9 +2,14 @@
 #include "lox.hpp"
 #include "token.hpp"
 #include "stmt.hpp"
+#include "codegen.hpp"
 
 #include <memory>
 #include <vector>
+
+#include <iostream>
+#include <llvm/IR/Value.h>
+#include <llvm/Support/raw_ostream.h>
 
 std::vector<Stmt*> Parser::parse() {
     std::vector<Stmt*> statements;
@@ -203,7 +208,15 @@ Stmt* Parser::func_statement(std::string kind) {
 }
 
 Stmt* Parser::expression_statement() {
-    Expr* value = expression();
+    const Expr* value = expression();
+
+    CodeGenerator code_generator;
+    Value* llvm_value = value->accept(&code_generator);
+
+    llvm_value->print(llvm::outs());
+
+
+
     consume(SEMICOLON, "Expect ';' after expression.");
     return new ExprStmt(value);
 }

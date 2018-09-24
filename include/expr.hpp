@@ -8,11 +8,14 @@
 #include <string>
 #include <vector>
 
+#include "llvm/IR/Value.h"
+
 using std::shared_ptr;
+using llvm::Value;
 
 class Expr {
 public:
-    virtual void accept(ExprVisitor<void>* visitor) const = 0;
+    virtual Value* accept(ExprVisitor<Value*>* visitor) const = 0;
     virtual std::string accept(ExprVisitor<std::string>* visitor) const = 0;
     virtual bool lvalue() const { return false; }
     virtual bool is_object_field() const { return false; }
@@ -26,7 +29,7 @@ public:
     Binary(Expr& left, Token op, Expr& right)
             : left(left), op(op), right(right) {}
 
-    virtual void accept(ExprVisitor<void>* visitor) const {
+    virtual Value* accept(ExprVisitor<Value*>* visitor) const {
         return visitor->visit(this);
     }
 
@@ -44,7 +47,7 @@ class Grouping : public Expr {
 public:
     explicit Grouping(Expr& expression) : expression(expression) {}
 
-    virtual void accept(ExprVisitor<void>* visitor) const {
+    virtual Value* accept(ExprVisitor<Value*>* visitor) const {
         return visitor->visit(this);
     }
 
@@ -62,7 +65,7 @@ public:
             nil(nil)
     {}
 
-    virtual void accept(ExprVisitor<void>* visitor) const {
+    virtual Value* accept(ExprVisitor<Value*>* visitor) const {
         return visitor->visit(this);
     }
 
@@ -81,7 +84,7 @@ public:
             nil(nil)
     {}
 
-    virtual void accept(ExprVisitor<void>* visitor) const {
+    virtual Value* accept(ExprVisitor<Value*>* visitor) const {
         return visitor->visit(this);
     }
 
@@ -97,7 +100,7 @@ class BoolLiteral : public Expr {
 public:
     explicit  BoolLiteral(bool value) : value(value) {}
 
-    virtual void accept(ExprVisitor<void>* visitor) const {
+    virtual Value* accept(ExprVisitor<Value*>* visitor) const {
         return visitor->visit(this);
     }
 
@@ -114,7 +117,7 @@ public:
     Unary(Token op, Expr& right)
             : op(op), right(right) {}
 
-    virtual void accept(ExprVisitor<void>* visitor) const {
+    virtual Value* accept(ExprVisitor<Value*>* visitor) const {
         return visitor->visit(this);
     }
 
@@ -131,7 +134,7 @@ public:
     This(Token keyword)
             : keyword(keyword) {}
 
-    virtual void accept(ExprVisitor<void>* visitor) const {
+    virtual Value* accept(ExprVisitor<Value*>* visitor) const {
         return visitor->visit(this);
     }
 
@@ -147,7 +150,7 @@ public:
     Variable(Token name)
             : name(name) {}
 
-    virtual void accept(ExprVisitor<void>* visitor) const {
+    virtual Value* accept(ExprVisitor<Value*>* visitor) const {
         return visitor->visit(this);
     }
 
@@ -165,7 +168,7 @@ public:
     Assignment(Token name, Expr& value)
             : name(name), value(value) {}
 
-    virtual void accept(ExprVisitor<void>* visitor) const {
+    virtual Value* accept(ExprVisitor<Value*>* visitor) const {
         return visitor->visit(this);
     }
 
@@ -185,7 +188,7 @@ public:
               op(op),
               right(right) {}
 
-    virtual void accept(ExprVisitor<void>* visitor) const {
+    virtual Value* accept(ExprVisitor<Value*>* visitor) const {
         return visitor->visit(this);
     }
 
@@ -205,7 +208,7 @@ public:
               paren(paren),
               args(args) {}
 
-    virtual void accept(ExprVisitor<void>* visitor) const {
+    virtual Value* accept(ExprVisitor<Value*>* visitor) const {
         return visitor->visit(this);
     }
 
@@ -224,7 +227,7 @@ public:
             : callee(callee),
               name(name) {}
 
-    virtual void accept(ExprVisitor<void>* visitor) const {
+    virtual Value* accept(ExprVisitor<Value*>* visitor) const {
         return visitor->visit(this);
     }
 
@@ -245,7 +248,7 @@ public:
               name(name),
               value(value) {}
 
-    virtual void accept(ExprVisitor<void>* visitor) const {
+    virtual Value* accept(ExprVisitor<Value*>* visitor) const {
         return visitor->visit(this);
     }
 
@@ -264,7 +267,7 @@ public:
             : parameters(parameters),
               body(body) {}
 
-    virtual void accept(ExprVisitor<void>* visitor) const {
+    virtual Value* accept(ExprVisitor<Value*>* visitor) const {
         return visitor->visit(this);
     }
 
