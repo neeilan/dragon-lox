@@ -6,6 +6,7 @@
 #include "token.hpp"
 #include "runtime_err.hpp"
 #include "codegen.hpp"
+#include "resolver.hpp"
 
 #include <fstream>
 #include <iostream>
@@ -51,6 +52,12 @@ void Lox::run(const std::string& source) {
 
     Parser parser(tokens);
     std::vector<Stmt *> statements = parser.parse();
+
+    CodeGenerator codegen;
+//    Resolver resolver(codegen);
+
+//    resolver.resolve(statements);
+
 
     // Stop if there was a parsing error.
     if (had_error) return;

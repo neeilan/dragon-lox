@@ -17,6 +17,7 @@ class Expr {
 public:
     virtual Value* accept(ExprVisitor<Value*>* visitor) const = 0;
     virtual std::string accept(ExprVisitor<std::string>* visitor) const = 0;
+    virtual void accept(ExprVisitor<void>* visitor) const = 0;
     virtual bool lvalue() const { return false; }
     virtual bool is_object_field() const { return false; }
     virtual bool callable() const { return false; }
@@ -37,6 +38,10 @@ public:
         return visitor->visit(this);
     }
 
+    virtual void accept(ExprVisitor<void>* visitor) const {
+        visitor->visit(this);
+    }
+
     const Expr& left;
     const Token op;
     const Expr& right;
@@ -55,6 +60,10 @@ public:
         return visitor->visit(this);
     }
 
+    virtual void accept(ExprVisitor<void>* visitor) const {
+        visitor->visit(this);
+    }
+
     const Expr& expression;
 };
 
@@ -71,6 +80,10 @@ public:
 
     virtual std::string accept(ExprVisitor<std::string>* visitor) const {
         return visitor->visit(this);
+    }
+
+    virtual void accept(ExprVisitor<void>* visitor) const {
+        visitor->visit(this);
     }
 
     std::string value;
@@ -92,6 +105,10 @@ public:
         return visitor->visit(this);
     }
 
+    virtual void accept(ExprVisitor<void>* visitor) const {
+        visitor->visit(this);
+    }
+
     double value;
     bool nil;
 };
@@ -106,6 +123,10 @@ public:
 
     virtual std::string accept(ExprVisitor<std::string>* visitor) const {
         return visitor->visit(this);
+    }
+
+    virtual void accept(ExprVisitor<void>* visitor) const {
+        visitor->visit(this);
     }
 
     bool value;
@@ -125,6 +146,10 @@ public:
         return visitor->visit(this);
     }
 
+    virtual void accept(ExprVisitor<void>* visitor) const {
+        visitor->visit(this);
+    }
+
     const Token op;
     const Expr& right;
 };
@@ -140,6 +165,10 @@ public:
 
     virtual std::string accept(ExprVisitor<std::string>* visitor) const {
         return visitor->visit(this);
+    }
+
+    virtual void accept(ExprVisitor<void>* visitor) const {
+        visitor->visit(this);
     }
 
     const Token keyword;
@@ -158,6 +187,10 @@ public:
         return visitor->visit(this);
     }
 
+    virtual void accept(ExprVisitor<void>* visitor) const {
+        visitor->visit(this);
+    }
+
     virtual bool lvalue() const { return true; }
 
     const Token name;
@@ -174,6 +207,10 @@ public:
 
     virtual std::string accept(ExprVisitor<std::string>* visitor) const {
         return visitor->visit(this);
+    }
+
+    virtual void accept(ExprVisitor<void>* visitor) const {
+        visitor->visit(this);
     }
 
     const Token name;
@@ -196,6 +233,10 @@ public:
         return visitor->visit(this);
     }
 
+    virtual void accept(ExprVisitor<void>* visitor) const {
+        visitor->visit(this);
+    }
+
     const Expr& left;
     const Token op;
     const Expr& right;
@@ -216,6 +257,10 @@ public:
         return visitor->visit(this);
     }
 
+    virtual void accept(ExprVisitor<void>* visitor) const {
+        visitor->visit(this);
+    }
+
     const Expr& callee;
     const Token paren;
     const std::vector<Expr*> args;
@@ -233,6 +278,10 @@ public:
 
     virtual std::string accept(ExprVisitor<std::string>* visitor) const {
         return visitor->visit(this);
+    }
+
+    virtual void accept(ExprVisitor<void>* visitor) const {
+        visitor->visit(this);
     }
 
     virtual bool is_object_field() const { return true; }
@@ -256,6 +305,10 @@ public:
         return visitor->visit(this);
     }
 
+    virtual void accept(ExprVisitor<void>* visitor) const {
+        visitor->visit(this);
+    }
+
     Expr& callee;
     const Token name;
     const Expr& value;
@@ -273,6 +326,10 @@ public:
 
     virtual std::string accept(ExprVisitor<std::string>* visitor) const {
         return visitor->visit(this);
+    }
+
+    virtual void accept(ExprVisitor<void>* visitor) const {
+        visitor->visit(this);
     }
 
     const std::vector<Token> parameters;

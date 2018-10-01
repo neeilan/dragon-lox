@@ -5,6 +5,8 @@
 #ifndef LOXPP_CODEGEN_HPP
 #define LOXPP_CODEGEN_HPP
 
+#include <map>
+
 #include "expr.hpp"
 #include "visitor.h"
 
@@ -14,21 +16,25 @@ using llvm::Value;
 
 class CodeGenerator : public ExprVisitor<Value*> {
 public:
-    virtual Value* visit(const Unary*);
-    virtual Value* visit(const Binary*);
-    virtual Value* visit(const Grouping*);
-    virtual Value* visit(const StrLiteral*);
-    virtual Value* visit(const NumLiteral*);
-    virtual Value* visit(const BoolLiteral*);
-    virtual Value* visit(const Variable*);
-    virtual Value* visit(const Assignment*);
-    virtual Value* visit(const Logical*);
-    virtual Value* visit(const Call*);
-    virtual Value* visit(const Get*);
-    virtual Value* visit(const Set*);
-    virtual Value* visit(const This*);
-    virtual Value* visit(const Lambda*);
+    Value* visit(const Unary*);
+    Value* visit(const Binary*);
+    Value* visit(const Grouping*);
+    Value* visit(const StrLiteral*);
+    Value* visit(const NumLiteral*);
+    Value* visit(const BoolLiteral*);
+    Value* visit(const Variable*);
+    Value* visit(const Assignment*);
+    Value* visit(const Logical*);
+    Value* visit(const Call*);
+    Value* visit(const Get*);
+    Value* visit(const Set*);
+    Value* visit(const This*);
+    Value* visit(const Lambda*);
+    void resolve(const Expr* expr, int depth);
     void print();
+
+private:
+    std::map<const Expr*, int> locals;
     
 };
 
