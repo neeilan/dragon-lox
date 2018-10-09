@@ -54,7 +54,9 @@ add_executable(dragon-lox
         include/visitable_types.hpp
         include/runtime_err.hpp
         src/codegen.cpp
-        include/codegen.hpp)
+        src/resolver.cpp
+        include/codegen.hpp
+        include/resolver.hpp include/environment.hpp)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 set(CMAKE_EXE_LINKER_FLAGS ${LLVM_LD_FLAGS_STRING})

@@ -210,10 +210,10 @@ Stmt* Parser::func_statement(std::string kind) {
 Stmt* Parser::expression_statement() {
     const Expr* value = expression();
 
-    CodeGenerator code_generator;
-    Value* llvm_value = value->accept(&code_generator);
-
-    llvm_value->print(llvm::outs());
+//    CodeGenerator code_generator;
+//    Value* llvm_value = value->accept(&code_generator);
+//
+//    llvm_value->print(llvm::outs());
 
 
 

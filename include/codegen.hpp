@@ -6,15 +6,18 @@
 #define LOXPP_CODEGEN_HPP
 
 #include <map>
+#include <memory>
 
 #include "expr.hpp"
 #include "visitor.h"
+#include "environment.hpp"
 
 #include "llvm/IR/Value.h"
 
+using std::shared_ptr;
 using llvm::Value;
 
-class CodeGenerator : public ExprVisitor<Value*> {
+class CodeGenerator : public ExprVisitor<Value*>, public StmtVisitor {
 public:
     Value* visit(const Unary*);
     Value* visit(const Binary*);
@@ -30,10 +33,23 @@ public:
     Value* visit(const Set*);
     Value* visit(const This*);
     Value* visit(const Lambda*);
+
+    void visit(const BlockStmt*);
+    void visit(const ExprStmt*);
+    void visit(const PrintStmt*);
+    void visit(const VarStmt*);
+    void visit(const ClassStmt*);
+    void visit(const IfStmt*);
+    void visit(const WhileStmt*);
+    void visit(const FuncStmt*);
+    void visit(const ReturnStmt*);
+
     void resolve(const Expr* expr, int depth);
-    void print();
+    void print(const Expr* expr);
 
 private:
+    Environment<shared_ptr<Value> > globals;
+    Environment<shared_ptr<Value> >* environment = &globals;
     std::map<const Expr*, int> locals;
     
 };

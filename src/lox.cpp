@@ -54,13 +54,16 @@ void Lox::run(const std::string& source) {
     std::vector<Stmt *> statements = parser.parse();
 
     CodeGenerator codegen;
-//    Resolver resolver(codegen);
+    Resolver resolver(codegen);
 
-//    resolver.resolve(statements);
+    resolver.resolve(statements);
 
+    for (const Stmt* stmt : statements) {
+        stmt->accept(&codegen);
+    }
 
     // Stop if there was a parsing error.
-    if (had_error) return;
+//    if (had_error) return;
 }
 
 

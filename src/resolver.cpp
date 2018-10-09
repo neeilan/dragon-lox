@@ -1,6 +1,6 @@
 #include <string>
 
-//#include "lox.hpp"
+#include "lox.hpp"
 #include "resolver.hpp"
 #include "stmt.hpp"
 

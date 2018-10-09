@@ -37,9 +37,20 @@ void CodeGenerator::resolve(const Expr* expr, int depth) {
     locals[expr] = depth;
 }
 
-void CodeGenerator::print() {
-
+void CodeGenerator::print(const Expr* expr) {
+    Value* value = expr->accept(this);
+    value->print(llvm::outs());
 }
+
+void CodeGenerator::visit(const BlockStmt*) {}
+void CodeGenerator::visit(const ExprStmt*) {}
+void CodeGenerator::visit(const PrintStmt*) {}
+void CodeGenerator::visit(const VarStmt*) {}
+void CodeGenerator::visit(const ClassStmt*) {}
+void CodeGenerator::visit(const IfStmt*) {}
+void CodeGenerator::visit(const WhileStmt*) {}
+void CodeGenerator::visit(const FuncStmt*) {}
+void CodeGenerator::visit(const ReturnStmt*) {}
 
 Value* CodeGenerator::visit(const Unary* expr) {
     Value* minus_one = ConstantFP::get(llvm_context, APFloat(-1.0));
@@ -78,9 +89,12 @@ Value* CodeGenerator::visit(const BoolLiteral*) {
     return nullptr;
 };
 
-Value* CodeGenerator::visit(const Variable* expr) { return named_values[expr->name.lexeme]; };
+Value* CodeGenerator::visit(const Variable* expr) {
+    shared_ptr<Value> value = environment->get(expr->name);
+    return value.get();
+}
 
-Value* CodeGenerator::visit(const Assignment*) { return nullptr; };
+Value* CodeGenerator::visit(const Assignment*){ return nullptr; };
 
 Value* CodeGenerator::visit(const Logical*) { return nullptr; };
 
