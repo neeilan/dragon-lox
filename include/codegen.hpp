@@ -44,12 +44,12 @@ public:
     void visit(const FuncStmt*);
     void visit(const ReturnStmt*);
 
+    void generate(const std::vector<Stmt*> &stmts);
     void resolve(const Expr* expr, int depth);
-    void print(const Expr* expr);
 
 private:
-    Environment<shared_ptr<Value> > globals;
-    Environment<shared_ptr<Value> >* environment = &globals;
+    Environment<Value*> globals;
+    Environment<Value*>* environment = &globals;
     std::map<const Expr*, int> locals;
     
 };
