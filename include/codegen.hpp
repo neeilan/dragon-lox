@@ -46,6 +46,7 @@ public:
 
     void generate(const std::vector<Stmt*> &stmts);
     void resolve(const Expr* expr, int depth);
+    void print_ir() const;
 
 private:
     Environment<Value*> globals;

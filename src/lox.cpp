@@ -58,6 +58,7 @@ void Lox::run(const std::string& source) {
 
     resolver.resolve(statements);
     codegen.generate(statements);
+    codegen.print_ir();
 
     // Stop if there was a parsing error.
 //    if (had_error) return;

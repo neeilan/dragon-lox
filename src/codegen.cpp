@@ -2,7 +2,10 @@
 // Created by Neeilan Selvalingam on 9/23/18.
 //
 
-#include <stmt.hpp>
+#include <iostream>
+#include <string>
+
+#include "stmt.hpp"
 #include "codegen.hpp"
 
 #include "llvm/ADT/APFloat.h"
@@ -37,6 +40,14 @@ static Module* module = new Module("Default module", llvm_context);
 // std::unique_ptr<Module> module(StringRef("Default module"), llvm_context);
 static std::map<std::string, Value *> named_values;
 
+void CodeGenerator::print_ir() const {
+    // Print generated IR
+    std::string generated_ir;
+    llvm::raw_string_ostream OS(generated_ir);
+    OS << *module;
+    OS.flush();
+    std::cout << generated_ir << std::endl;
+}
 
 void CodeGenerator::generate(const std::vector<Stmt*> &stmts) {
     for (const Stmt* stmt : stmts) {
@@ -65,7 +76,7 @@ void CodeGenerator::visit(const BlockStmt* stmt) {
 
 void CodeGenerator::visit(const ExprStmt* stmt) {
     Value* val = stmt->expression->accept(this);
-    val->print(llvm::outs());
+//    val->print(llvm::outs());
 }
 
 void CodeGenerator::visit(const PrintStmt*) {
@@ -75,7 +86,7 @@ void CodeGenerator::visit(const PrintStmt*) {
 void CodeGenerator::visit(const VarStmt* stmt) {
     Value* value = stmt->expression->accept(this);
     environment->define(stmt->name.lexeme, value);
-    value->print(llvm::outs());
+//    value->print(llvm::outs());
 }
 
 void CodeGenerator::visit(const ClassStmt*) {
@@ -149,7 +160,7 @@ void CodeGenerator::visit(const FuncStmt* stmt) {
     // The function definition
     this->generate(stmt->body);
 
-    func->print(llvm::outs());
+//    func->print(llvm::outs());
 
     // Define the function globally
     environment->define(stmt->name.lexeme, func);
@@ -220,7 +231,6 @@ Value* CodeGenerator::visit(const Logical*) { return nullptr; };
 Value* CodeGenerator::visit(const Call* expr) {
 
     auto callee_val = expr->callee.accept(this);
-    callee_val->print(llvm::outs());
     auto callee_name = callee_val->getName();
 
     Function* callee = module->getFunction(callee_name);

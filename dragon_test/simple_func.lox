@@ -2,4 +2,6 @@ fun double(x) {
   return x*2;
 }
 
-double(5);
+fun main() {
+  double(5);
+}
