@@ -58,6 +58,7 @@ public:
             return enclosing->get(name);
         }
 
+        assert(false && "Undefined variable");
         // throw RuntimeErr(name, "Undefined variable '" + name.lexeme + "'.");
     }
 

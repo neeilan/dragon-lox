@@ -1,0 +1,2 @@
+var test_var = 5;
+test_var;

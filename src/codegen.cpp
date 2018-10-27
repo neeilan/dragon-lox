@@ -72,8 +72,10 @@ void CodeGenerator::visit(const PrintStmt*) {
 
 }
 
-void CodeGenerator::visit(const VarStmt*) {
-
+void CodeGenerator::visit(const VarStmt* stmt) {
+    Value* value = stmt->expression->accept(this);
+    environment->define(stmt->name.lexeme, value);
+    value->print(llvm::outs());
 }
 
 void CodeGenerator::visit(const ClassStmt*) {
@@ -149,6 +151,9 @@ void CodeGenerator::visit(const FuncStmt* stmt) {
 
     func->print(llvm::outs());
 
+    // Define the function globally
+    environment->define(stmt->name.lexeme, func);
+
 }
 
 void CodeGenerator::visit(const ReturnStmt* stmt) {
@@ -174,7 +179,6 @@ Value* CodeGenerator::visit(const Binary* expr) {
         case MINUS: return ir_builder.CreateFSub(lhs_value, rhs_value, "subtmp");
         case STAR: return ir_builder.CreateFMul(lhs_value, rhs_value, "multmp");
         case SLASH: return ir_builder.CreateFDiv(lhs_value, rhs_value, "multmp");
-
         default: return nullptr;
     }
 };
@@ -208,7 +212,7 @@ Value* CodeGenerator::visit(const Variable* expr) {
 }
 
 Value* CodeGenerator::visit(const Assignment* expr) {
-    environment->assign(expr->name, expr->value.accept(this));
+    environment->define(expr->name.lexeme, expr->value.accept(this));
 };
 
 Value* CodeGenerator::visit(const Logical*) { return nullptr; };
@@ -238,12 +242,6 @@ Value* CodeGenerator::visit(const Call* expr) {
     return ir_builder.CreateCall(callee, argv, "calltmp");
 };
 
-Value* CodeGenerator::visit(const Get*) { return nullptr; };
-
-Value* CodeGenerator::visit(const Set*) { return nullptr; };
-
-Value* CodeGenerator::visit(const This*) { return nullptr; };
-
 Value* CodeGenerator::visit(const Lambda* expr) {
     // Only support doubles for now
     std::vector<Type*> doubles(expr->parameters.size(), Type::getDoubleTy(llvm_context));
@@ -255,3 +253,9 @@ Value* CodeGenerator::visit(const Lambda* expr) {
     ir_builder.SetInsertPoint(bb);
     return nullptr;
 };
+
+Value* CodeGenerator::visit(const Get*) { return nullptr; };
+
+Value* CodeGenerator::visit(const Set*) { return nullptr; };
+
+Value* CodeGenerator::visit(const This*) { return nullptr; };
